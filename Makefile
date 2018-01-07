@@ -9,7 +9,9 @@ REMOTE_NAME=$(DOCKER_ID_USER)/$(IMAGE_NAME)
 
 all: $(BIN)/$(BIN_NAME)
 
-image:
+image: tmp
+	wget -O tmp/kube-ingwatcher https://github.com/nmaupu/kube-ingwatcher/releases/download/v${IMAGE_VERSION}/kube-ingwatcher_linux-amd64
+	chmod +x tmp/kube-ingwatcher
 	docker build -t $(IMAGE_NAME):$(IMAGE_VERSION) -f Dockerfile.scratch .
 
 tag: image
@@ -34,6 +36,10 @@ clean:
 	go clean -i
 	rm -rf $(BIN)
 	rm -rf vendor
+	rm -rf tmp
+
+tmp:
+	mkdir -p tmp
 
 $(BIN):
 	mkdir -p $(BIN)
