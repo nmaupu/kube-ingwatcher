@@ -1,0 +1,30 @@
+language: go
+go:
+- '1.8'
+sudo: false
+
+before_install:
+- go get -v github.com/Masterminds/glide
+- cd $GOPATH/src/github.com/Masterminds/glide && git checkout 3e13fd16ed5b0808ba0fb2e4bd98eb325ccde0a1 && go install && cd -
+
+install: make vendor
+
+script:
+- make build-linux
+- make build-darwin
+
+before_deploy:
+- mkdir -p bin_release
+- CGO_ENABLED=0 GOOS=linux  GOARCH=amd64 go build -a -ldflags '-extldflags "-static" -X main.AppVersion=$TRAVIS_TAG' -o bin_release/kube-ingwatcher_linux-amd64
+- CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -a -ldflags '-extldflags "-static" -X main.AppVersion=$TRAVIS_TAG' -o bin_release/kube-ingwatcher_darwin-amd64
+
+deploy:
+  provider: releases
+  api_key:
+    secure: Ss5dX4s5FvxypxqgsPogX6v2gDlrOsMJ4v93BDd3YVDrNvw9WBGgmb9wFuFquwaaeExMQ4mUGzDDCRuYRWrpc3wDZxCxE1rq9fxWli+AQTy9dmxD1EYFUVIj7/XCB5wfvz9irQ0E6GjBH3Ubv+CPrnoQwtRnBphn5K6UfyNH/yKMoHdhpFUpYA89rmKnZ+hdU3Mepmo1vvUu/TBQMiENtblBqZHfQ6uNsAgZBJhD9bKsSulb0VYgIuyT/tVxDHqC3B3BHTs3bI+mVliMHRfRgsb9RDoeCwCQiNUZxLZY1cKwWzy8vhGtPcx51r9Y1aC3aBhj1d26UidVWb/yUuz6fEG6yOexiKYNoCO8/ixo0UNWha7W5Bl5mrcCHUtcbB5C6Mk0JoC3iw4aQNYK2tKSWiCZ2/8NeNV9iNZotpGg2bkrITkJE02lo5M9frAIoFqIwRiKbpiOfViwrZzu17k1hlVpnAZlzpKy7lCv6XCBcVqZVB7rEgKzmHVsB/5bF945fKqDjaSPTcxdSuo0wHzFWajEghB7ON0TRgfc6trM1PZd7uO6d0Iv6WRdsVgSCOFOmxPyqtMbkKFBp+AuJ1zx7Qq1NK36jcQa4K7uwQh0TccjvwFB6yzXF9xkUpl+jybOEGULxZr5A4R1hrYzNteDLC8T+1p82xKRZ4CuPcxCwo8=
+  file_glob: true
+  file: bin_release/*
+  skip_cleanup: true
+  on:
+    tags: true
+  go: 1.8
