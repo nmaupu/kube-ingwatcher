@@ -1,0 +1,3 @@
+FROM scratch
+COPY bin/kube-ingwatcher /
+ENTRYPOINT ["/kube-ingwatcher"]

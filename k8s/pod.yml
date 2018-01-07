@@ -1,0 +1,14 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: kube-ingwatcher
+  namespace: kube-system
+spec:
+  containers:
+    - name: kube-ingwatcher
+      image: docker.io/nmaupu/kube-ingwatcher:1.0
+      imagePullPolicy: Always
+      args:
+        - ingressSender
+        - --addr=rproxy.priv.fossar.net
+        - --port=6565

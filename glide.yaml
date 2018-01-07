@@ -1,0 +1,11 @@
+package: github.com/nmaupu/kube-ingwatcher
+ignore:
+- k8s.io/apimachinery/pkg/apis/meta/v1alpha1
+import:
+- package: k8s.io/client-go
+  version: v4.0.0
+  subpackages:
+  - kubernetes
+  - pkg/api/v1
+  - rest
+  - tools/clientcmd
