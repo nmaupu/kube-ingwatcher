@@ -41,16 +41,7 @@ Options:
 ```
 
 ```
-$ /tmp/kube-ingwatcher ingressSender --help
-
-Usage: kube-ingwatcher ingressSender [OPTIONS]
-
-Ingress sender mode
-
-Options:
-  -a, --addr   Destination address to send ingress to
-  -p, --port   Default port to connect to (default 6565)
-[nmaupu@rproxy-priv ~]$ /tmp/kube-ingwatcher ingressReceiver --help
+$ /tmp/kube-ingwatcher ingressReceiver --help
 
 Usage: kube-ingwatcher ingressReceiver [OPTIONS]
 
