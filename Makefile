@@ -2,7 +2,7 @@ BIN=bin
 BIN_NAME=kube-ingwatcher
 
 IMAGE_NAME=$(BIN_NAME)
-IMAGE_VERSION=1.0
+IMAGE_VERSION=1.1
 REMOTE_NAME=$(DOCKER_ID_USER)/$(IMAGE_NAME)
 
 .PHONY: all fmt vendor clean
@@ -21,7 +21,7 @@ push: tag
 	docker push $(REMOTE_NAME):$(IMAGE_VERSION)
 
 push-test: tmp
-	make build-linux
+	make $(BIN)/$(BIN_NAME)
 	cp $(BIN)/$(BIN_NAME) tmp/kube-ingwatcher
 	chmod +x tmp/kube-ingwatcher
 	docker build -t $(IMAGE_NAME):test -f Dockerfile.scratch .

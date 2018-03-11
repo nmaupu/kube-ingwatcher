@@ -14,9 +14,10 @@ const (
 )
 
 type ClientPayload struct {
-	Name      string   `json:"name"`
-	Namespace string   `json:"namespace"`
-	Hosts     []string `json:"hosts"`
+	Name      string            `json:"name"`
+	Namespace string            `json:"namespace"`
+	Hosts     []string          `json:"hosts"`
+	Labels    map[string]string `json:"labels"`
 }
 
 func (cp ClientPayload) GenerateTemplate(tpl, dest string) error {

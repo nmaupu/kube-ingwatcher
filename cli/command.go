@@ -24,8 +24,9 @@ func Process(appName, appDesc, appVersion string) {
 
 func ingressSender(cmd *cli.Cmd) {
 	params := config.IngressSenderParams{
-		DestAddr: cmd.StringOpt("a addr", "", "Destination address to send ingress to"),
-		DestPort: cmd.IntOpt("p port", DEFAULT_PORT, "Default port to connect to"),
+		DestAddr:    cmd.StringOpt("a addr", "", "Destination address to send ingress to"),
+		DestPort:    cmd.IntOpt("p port", DEFAULT_PORT, "Default port to connect to"),
+		LabelFilter: cmd.StringOpt("l labelFilter", "", "Filter ingress by labels (e.g. -l name=test)"),
 	}
 
 	cmd.Action = func() {

@@ -15,12 +15,18 @@ func StartSender(p *config.IngressSenderParams) {
 
 	sender := event.Sender{
 		Callback: func(action int, payload config.ClientPayload) {
+			// Checking config's filter to know if we send or not this payload
+			if !p.In(payload.Labels) {
+				log.Printf("Label filtering prevents this ingress to be sent, aborting.")
+				return
+			}
+
 			var err error
 			var jsn []byte
 			var req *http.Request
 			var resp *http.Response
 
-			// Try to marshal payload object
+			// Try to marshal the payload object
 			jsn, err = json.Marshal(payload)
 			if err != nil {
 				log.Printf("%v\n", err.Error())
