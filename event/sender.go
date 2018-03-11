@@ -3,6 +3,7 @@ package event
 import (
 	"github.com/nmaupu/kube-ingwatcher/config"
 	"k8s.io/client-go/pkg/apis/extensions/v1beta1"
+	"log"
 )
 
 var (
@@ -21,6 +22,8 @@ func (e Sender) action(action int, obj interface{}) {
 	for _, rule := range ing.Spec.Rules {
 		hosts = append(hosts, rule.Host)
 	}
+
+	log.Printf("ingress labels: %v\n", ing.Labels)
 
 	e.Callback(action, config.ClientPayload{
 		Namespace: ing.Namespace,

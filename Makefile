@@ -20,6 +20,14 @@ tag: image
 push: tag
 	docker push $(REMOTE_NAME):$(IMAGE_VERSION)
 
+push-test: tmp
+	make build-linux
+	cp $(BIN)/$(BIN_NAME) tmp/kube-ingwatcher
+	chmod +x tmp/kube-ingwatcher
+	docker build -t $(IMAGE_NAME):test -f Dockerfile.scratch .
+	docker tag $(IMAGE_NAME):test $(REMOTE_NAME):test
+	docker push $(REMOTE_NAME):test
+
 fmt:
 	go fmt ./...
 
