@@ -17,7 +17,7 @@ func StartSender(p *config.IngressSenderParams) {
 		Callback: func(action int, payload config.ClientPayload) {
 			// Checking config's filter to know if we send or not this payload
 			if !p.In(payload.Labels) {
-				log.Printf("Label filtering prevents this ingress to be sent, aborting.")
+				log.Printf("Label filtering prevents this ingress to be sent, aborting. %+v\n", payload)
 				return
 			}
 

@@ -2,7 +2,7 @@ BIN=bin
 BIN_NAME=kube-ingwatcher
 
 IMAGE_NAME=$(BIN_NAME)
-IMAGE_VERSION=1.1
+IMAGE_VERSION=1.2
 REMOTE_NAME=$(DOCKER_ID_USER)/$(IMAGE_NAME)
 
 .PHONY: all fmt vendor clean
