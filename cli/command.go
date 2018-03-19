@@ -40,7 +40,7 @@ func ingressReceiver(cmd *cli.Cmd) {
 		Port:          cmd.IntOpt("p port", DEFAULT_PORT, "Port to bind"),
 		Template:      cmd.StringOpt("t template", "", "Template to render when an ingress is received"),
 		Destination:   cmd.StringOpt("d destination", "", "Destination directory where to generate templates"),
-		Prefix:        cmd.StringOpt("p prefix", "", "Prefix to use for filename when generating a template"),
+		Prefix:        cmd.StringOpt("P prefix", "", "Prefix to use for filename when generating a template"),
 		Suffix:        cmd.StringOpt("s suffix", "", "Suffix to use for filenme when generating a template"),
 		ExecCmdAdd:    cmd.StringOpt("A addCmd", "", "Command to execute after rendering a file from the template"),
 		ExecCmdDelete: cmd.StringOpt("D deleteCmd", "", "Command to execute after deleting a file previously created with the template"),
