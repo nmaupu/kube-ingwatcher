@@ -3,7 +3,7 @@ BIN_RELEASE=bin_release
 BIN_NAME=kube-ingwatcher
 
 IMAGE_NAME=$(BIN_NAME)
-IMAGE_VERSION ?= 1.5
+IMAGE_VERSION ?= 1.6
 REMOTE_NAME=$(DOCKER_ID_USER)/$(IMAGE_NAME)
 
 .PHONY: all fmt clean

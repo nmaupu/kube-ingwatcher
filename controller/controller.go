@@ -35,7 +35,7 @@ func InitIngressController(getEvent func() event.Event) {
 	_, controller := cache.NewInformer(
 		watchlist,
 		&networking.Ingress{},
-		time.Second*2,
+		time.Second*0,
 		cache.ResourceEventHandlerFuncs{
 			AddFunc: func(obj interface{}) {
 				err := getEvent().Add(obj)
