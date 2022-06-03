@@ -35,7 +35,7 @@ func (p *IngressSenderParams) GetLabelFilterValue() string {
 	}
 }
 
-// Check if current label is present in a given map
+// In checks if current label is present in a given map
 func (p *IngressSenderParams) In(labels map[string]string) bool {
 	lName := p.GetLabelFilterName()
 	lValue := p.GetLabelFilterValue()

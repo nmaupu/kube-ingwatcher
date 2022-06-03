@@ -5,7 +5,7 @@ IMAGE_NAME=$(BIN_NAME)
 IMAGE_VERSION=1.2
 REMOTE_NAME=$(DOCKER_ID_USER)/$(IMAGE_NAME)
 
-.PHONY: all fmt vendor clean
+.PHONY: all fmt clean
 
 all: $(BIN)/$(BIN_NAME)
 
@@ -31,9 +31,6 @@ push-test: tmp
 fmt:
 	go fmt ./...
 
-vendor:
-	glide update -v
-
 $(BIN)/$(BIN_NAME) build-linux: $(BIN) $(shell find . -name "*.go")
 	env CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -ldflags '-extldflags "-static"' -o $(BIN)/$(BIN_NAME) .
 
@@ -43,7 +40,6 @@ $(BIN)/$(BIN_NAME)-darwin build-darwin: $(BIN) $(shell find . -name "*.go")
 clean:
 	go clean -i
 	rm -rf $(BIN)
-	rm -rf vendor
 	rm -rf tmp
 
 tmp:

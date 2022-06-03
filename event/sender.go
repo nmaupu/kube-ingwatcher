@@ -2,7 +2,7 @@ package event
 
 import (
 	"github.com/nmaupu/kube-ingwatcher/config"
-	"k8s.io/client-go/pkg/apis/extensions/v1beta1"
+	networking "k8s.io/api/networking/v1"
 )
 
 var (
@@ -13,8 +13,8 @@ type Sender struct {
 	Callback func(action int, payload config.ClientPayload)
 }
 
-func (e Sender) action(action int, obj interface{}) {
-	ing, _ := obj.(*v1beta1.Ingress)
+func (e Sender) action(action int, obj interface{}){
+	ing, _ := obj.(*networking.Ingress)
 
 	// Getting all hosts from ingress
 	var hosts []string
@@ -30,15 +30,18 @@ func (e Sender) action(action int, obj interface{}) {
 	})
 }
 
-func (e Sender) Add(obj interface{}) {
-	e.action(config.ACTION_ADD, obj)
+func (e Sender) Add(obj interface{}) error {
+	e.action(config.ActionAdd, obj)
+	return nil
 }
 
-func (e Sender) Delete(obj interface{}) {
-	e.action(config.ACTION_DELETE, obj)
+func (e Sender) Delete(obj interface{}) error {
+	e.action(config.ActionDelete, obj)
+	return nil
 }
 
-func (e Sender) Update(oldObj, newObj interface{}) {
+func (e Sender) Update(oldObj, newObj interface{}) error {
 	e.Delete(oldObj)
 	e.Add(newObj)
+	return nil
 }

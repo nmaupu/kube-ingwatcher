@@ -9,8 +9,8 @@ import (
 )
 
 const (
-	ACTION_ADD    = 0
-	ACTION_DELETE = 1
+	ActionAdd    = iota
+	ActionDelete
 )
 
 type ClientPayload struct {

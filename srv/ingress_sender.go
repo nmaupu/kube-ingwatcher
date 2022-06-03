@@ -35,9 +35,9 @@ func StartSender(p *config.IngressSenderParams) {
 
 			method := ""
 			switch action {
-			case config.ACTION_ADD:
+			case config.ActionAdd:
 				method = "PUT"
-			case config.ACTION_DELETE:
+			case config.ActionDelete:
 				method = "DELETE"
 			}
 

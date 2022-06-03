@@ -11,7 +11,8 @@ metadata:
   name: kube-ingwatcher
 rules:
 - apiGroups:
-    - "extensions"
+    - extensions
+    - networking.k8s.io
   resources:
     - ingresses
   verbs: 

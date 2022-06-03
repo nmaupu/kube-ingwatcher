@@ -17,7 +17,7 @@ var (
 
 func handleError(w http.ResponseWriter, err error) bool {
 	if err != nil {
-		log.Printf("Error encountered: %v\n", err.Error())
+		log.Printf("Error encountered: %v\n", err)
 		http.Error(w, err.Error(), 400)
 		return true
 	}
@@ -39,7 +39,7 @@ func handleRequest(w http.ResponseWriter, r *http.Request) {
 	var payload config.ClientPayload
 
 	if r.Body == nil {
-		http.Error(w, "Please send a payload", 400)
+		http.Error(w, "please send a payload", 400)
 		return
 	}
 

@@ -1,13 +1,15 @@
 package controller
 
 import (
+	"fmt"
 	"github.com/nmaupu/kube-ingwatcher/event"
+	networking "k8s.io/api/networking/v1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/pkg/api/v1"
-	"k8s.io/client-go/pkg/apis/extensions/v1beta1"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/cache"
+	"log"
 	"time"
 )
 
@@ -23,21 +25,36 @@ func InitIngressController(getEvent func() event.Event) {
 		panic(err.Error())
 	}
 
-	client := clientset.Extensions().RESTClient()
+	client := clientset.CoreV1().RESTClient()
 	watchlist := cache.NewListWatchFromClient(
 		client,
 		"ingresses",
-		v1.NamespaceAll,
+		metav1.NamespaceAll,
 		fields.Everything())
 
 	_, controller := cache.NewInformer(
 		watchlist,
-		&v1beta1.Ingress{},
+		&networking.Ingress{},
 		time.Second*0,
 		cache.ResourceEventHandlerFuncs{
-			AddFunc:    getEvent().Add,
-			DeleteFunc: getEvent().Delete,
-			UpdateFunc: getEvent().Update,
+			AddFunc:    func(obj interface{}) {
+				err := getEvent().Add(obj)
+				if err != nil {
+					log.Printf("%v", err)
+				}
+			},
+			DeleteFunc: func(obj interface{}) {
+				err := getEvent().Delete(obj)
+				if err != nil {
+					log.Printf("%v", err)
+				}
+			},
+			UpdateFunc: func(old, new interface{}) {
+				err := getEvent().Update(old, new)
+				if err != nil {
+					fmt.Printf("%v", err)
+				}
+			},
 		},
 	)
 

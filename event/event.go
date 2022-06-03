@@ -1,7 +1,7 @@
 package event
 
 type Event interface {
-	Add(obj interface{})
-	Delete(obj interface{})
-	Update(oldObj, newObj interface{})
+	Add(obj interface{}) error
+	Delete(obj interface{}) error
+	Update(oldObj, newObj interface{}) error
 }
