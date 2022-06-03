@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	ActionAdd    = iota
+	ActionAdd = iota
 	ActionDelete
 )
 

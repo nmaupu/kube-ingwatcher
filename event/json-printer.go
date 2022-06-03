@@ -9,7 +9,7 @@ var (
 	_ Event = JsonPrinter{}
 )
 
-type JsonPrinter struct {}
+type JsonPrinter struct{}
 
 func (e JsonPrinter) Add(obj interface{}) error {
 	jsn, err := processJson(obj)

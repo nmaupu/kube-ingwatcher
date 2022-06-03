@@ -13,7 +13,7 @@ type Sender struct {
 	Callback func(action int, payload config.ClientPayload)
 }
 
-func (e Sender) action(action int, obj interface{}){
+func (e Sender) action(action int, obj interface{}) {
 	ing, _ := obj.(*networking.Ingress)
 
 	// Getting all hosts from ingress

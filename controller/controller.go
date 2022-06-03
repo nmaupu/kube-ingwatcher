@@ -37,7 +37,7 @@ func InitIngressController(getEvent func() event.Event) {
 		&networking.Ingress{},
 		time.Second*0,
 		cache.ResourceEventHandlerFuncs{
-			AddFunc:    func(obj interface{}) {
+			AddFunc: func(obj interface{}) {
 				err := getEvent().Add(obj)
 				if err != nil {
 					log.Printf("%v", err)
