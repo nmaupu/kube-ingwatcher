@@ -1,8 +1,9 @@
 BIN=bin
+BIN_RELEASE=bin_release
 BIN_NAME=kube-ingwatcher
 
 IMAGE_NAME=$(BIN_NAME)
-IMAGE_VERSION=1.4
+IMAGE_VERSION ?= 1.5
 REMOTE_NAME=$(DOCKER_ID_USER)/$(IMAGE_NAME)
 
 .PHONY: all fmt clean
@@ -41,6 +42,7 @@ clean:
 	go clean -i
 	rm -rf $(BIN)
 	rm -rf tmp
+	rm -rf bin_release
 
 tmp:
 	mkdir -p tmp
@@ -48,3 +50,9 @@ tmp:
 $(BIN):
 	mkdir -p $(BIN)
 
+$(BIN_RELEASE):
+	mkdir -p $(BIN_RELEASE)
+
+prepare-release: $(BIN_RELEASE)
+	CGO_ENABLED=0 GOOS=linux  GOARCH=amd64 go build -a -ldflags "-extldflags \"-static\" -X main.AppVersion=v$(IMAGE_VERSION)" -o bin_release/kube-ingwatcher_linux-amd64
+	CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -a -ldflags "-extldflags \"-static\" -X main.AppVersion=v$(IMAGE_VERSION)" -o bin_release/kube-ingwatcher_darwin-amd64

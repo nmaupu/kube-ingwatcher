@@ -25,7 +25,7 @@ func InitIngressController(getEvent func() event.Event) {
 		panic(err.Error())
 	}
 
-	client := clientset.CoreV1().RESTClient()
+	client := clientset.NetworkingV1().RESTClient()
 	watchlist := cache.NewListWatchFromClient(
 		client,
 		"ingresses",
@@ -35,7 +35,7 @@ func InitIngressController(getEvent func() event.Event) {
 	_, controller := cache.NewInformer(
 		watchlist,
 		&networking.Ingress{},
-		time.Second*0,
+		time.Second*2,
 		cache.ResourceEventHandlerFuncs{
 			AddFunc: func(obj interface{}) {
 				err := getEvent().Add(obj)
