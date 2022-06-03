@@ -4,3 +4,4 @@ vendor/
 bin/
 tmp/
 .idea/
+bin_release/
